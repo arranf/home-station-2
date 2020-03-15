@@ -109,7 +109,7 @@ impl WeatherWidget {
     }
 
     fn wind_speed(status: &Weather) -> Option<String> {
-        Some(format!("{:.0} km/h", status.wind_speed?))
+        Some(format!("{:.0} mph", status.wind_speed?))
     }
 }
 
