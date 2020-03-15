@@ -1,3 +1,0 @@
-#!/bin/bash
-
-sshfs pi.home:/home/pi pi -o allow_other
