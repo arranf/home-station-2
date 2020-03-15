@@ -51,7 +51,7 @@ impl TimeWidget {
                 .font_size(140)
                 .set(self.ids.time, ctx.ui);
 
-            // @todo
+            // @todo Print the weekday in a human readable format
             //            Text::new(&status.human_weekday)
             //                .mid_bottom_of(self.ids.weekday_wrapper)
             //                .color(color::WHITE)
@@ -73,7 +73,7 @@ impl TimeWidget {
     }
 
     fn date(status: &Time) -> String {
-        format!("{} {}", status.day, "----") // @todo
+        format!("{}/{}/{}", status.day, status.month, status.year) // @todo A more human readable date
     }
 }
 
