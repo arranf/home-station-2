@@ -17,9 +17,7 @@ impl WeatherClient {
     pub fn get_weather(&self) -> Weather {
         let (tx, rx) = channel();
 
-        self.tx
-            .send(WeatherRequest::GetWeather { tx })
-            .unwrap();
+        self.tx.send(WeatherRequest::GetWeather { tx }).unwrap();
 
         rx.recv().unwrap()
     }

@@ -1,8 +1,4 @@
-pub use self::{
-    controller::*,
-    route::*,
-    router::*,
-};
+pub use self::{controller::*, route::*, router::*};
 
 mod controller;
 mod route;

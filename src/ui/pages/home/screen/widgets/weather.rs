@@ -1,5 +1,5 @@
-use conrod_core::{color, Colorable, Positionable, Sizeable, Ui, Widget};
 use conrod_core::widget::{Canvas, Id as WidgetId, Image, Text};
+use conrod_core::{color, Colorable, Positionable, Sizeable, Ui, Widget};
 
 use lib_service_common::Weather;
 use lib_ui_framework::ScreenSettingContext;
@@ -36,14 +36,20 @@ impl WeatherWidget {
                 .parent(self.ids.status_wrapper)
                 .wh_of(self.ids.status_wrapper)
                 .flow_right(&[
-                    (self.ids.status_left, Canvas::new().flow_down(&[
-                        (self.ids.temperature_wrapper, Canvas::new().pad_bottom(10.0)),
-                        (self.ids.pressure_wrapper, Canvas::new().pad_top(10.0)),
-                    ])),
-                    (self.ids.status_right, Canvas::new().flow_down(&[
-                        (self.ids.humidity_wrapper, Canvas::new().pad_bottom(10.0)),
-                        (self.ids.wind_speed_wrapper, Canvas::new().pad_top(10.0)),
-                    ])),
+                    (
+                        self.ids.status_left,
+                        Canvas::new().flow_down(&[
+                            (self.ids.temperature_wrapper, Canvas::new().pad_bottom(10.0)),
+                            (self.ids.pressure_wrapper, Canvas::new().pad_top(10.0)),
+                        ]),
+                    ),
+                    (
+                        self.ids.status_right,
+                        Canvas::new().flow_down(&[
+                            (self.ids.humidity_wrapper, Canvas::new().pad_bottom(10.0)),
+                            (self.ids.wind_speed_wrapper, Canvas::new().pad_top(10.0)),
+                        ]),
+                    ),
                 ])
                 .set(self.ids.status, ctx.ui);
 

@@ -29,17 +29,17 @@ pub fn init_conrod(
     // Load fonts
     debug!("-> fonts");
 
-    let fonts = assets
-        .join("app")
-        .join("fonts");
+    let fonts = assets.join("app").join("fonts");
 
     for font in &["FiraSans-Light.ttf", "FiraSans-Regular.ttf"] {
-        ui.fonts
-            .insert_from_file(fonts.join(font))
-            .unwrap();
+        ui.fonts.insert_from_file(fonts.join(font)).unwrap();
     }
 
     debug!("... ready");
 
-    ConrodBootstrapContext { ui, renderer, image_map }
+    ConrodBootstrapContext {
+        ui,
+        renderer,
+        image_map,
+    }
 }

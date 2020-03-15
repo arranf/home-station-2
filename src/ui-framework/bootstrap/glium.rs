@@ -30,11 +30,12 @@ pub fn init_glium(config: &Config) -> GliumBootstrapContext {
     // Initialize display
     debug!("-> display");
 
-    let display = Display(
-        glium::Display::new(window, context, &events_loop).unwrap()
-    );
+    let display = Display(glium::Display::new(window, context, &events_loop).unwrap());
 
     debug!("... ready");
 
-    GliumBootstrapContext { events_loop, display }
+    GliumBootstrapContext {
+        events_loop,
+        display,
+    }
 }

@@ -19,17 +19,12 @@ impl<'sys, State> NavigationController<'sys, State> {
     pub fn navigate_to(&mut self, context: ScreenCreationContext<State>, id: &str) {
         debug!("Navigating to: {}", id);
 
-        let screen = self.router
-            .get(id)
-            .unwrap()
-            .create_screen(context);
+        let screen = self.router.get(id).unwrap().create_screen(context);
 
         self.screens.push_back(screen);
     }
 
     pub fn current_mut(&mut self) -> Option<&mut (dyn Screen + 'static)> {
-        self.screens
-            .back_mut()
-            .map(DerefMut::deref_mut)
+        self.screens.back_mut().map(DerefMut::deref_mut)
     }
 }

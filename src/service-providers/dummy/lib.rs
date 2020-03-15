@@ -1,7 +1,9 @@
 #[macro_use]
 extern crate log;
 
-use lib_service_common::{Time, TimeService, Weather, WeatherForecast, WeatherIcon, WeatherService};
+use lib_service_common::{
+    Time, TimeService, Weather, WeatherForecast, WeatherIcon, WeatherService,
+};
 
 pub struct Provider;
 

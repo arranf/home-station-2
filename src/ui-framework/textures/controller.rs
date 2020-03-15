@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 use std::path::Path;
 
-use crate::{Display, TextureLoader};
 use crate::vendor::{ImageId, ImageMap};
+use crate::{Display, TextureLoader};
 
 pub struct TextureController<'sys> {
     display: &'sys Display,
@@ -23,22 +23,22 @@ impl<'sys> TextureController<'sys> {
         for (texture_name, texture) in TextureLoader::load_dir(self.display, assets) {
             let texture_id = self.image_map.insert(texture);
 
-            trace!("Texture `{}` is now available as `{:?}`", texture_name, texture_id);
+            trace!(
+                "Texture `{}` is now available as `{:?}`",
+                texture_name,
+                texture_id
+            );
 
             self.images.insert(texture_name, texture_id);
         }
     }
 
     pub fn get(&self, name: &str) -> Option<ImageId> {
-        self.images
-            .get(name)
-            .map(ToOwned::to_owned)
+        self.images.get(name).map(ToOwned::to_owned)
     }
 
     pub fn get_ex(&self, name: &[&str]) -> Option<ImageId> {
-        self.get(
-            &name.join(":"),
-        )
+        self.get(&name.join(":"))
     }
 
     pub fn image_map(&self) -> &ImageMap {

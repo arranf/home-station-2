@@ -8,22 +8,15 @@ use glium::glutin;
 
 use crate::Display;
 
-pub use self::{
-    event::*,
-    task::*,
-    task_dispatcher::*,
-};
-use self::{
-    event_loop::*,
-    task_loop::*,
-};
+pub use self::{event::*, task::*, task_dispatcher::*};
+use self::{event_loop::*, task_loop::*};
 
 mod event;
 mod event_loop;
 
 mod task;
-mod task_loop;
 mod task_dispatcher;
+mod task_loop;
 
 const MAX_FPS: f32 = 30.0;
 const MAX_PARK_DURATION: Duration = Duration::from_millis((1000.0 / MAX_FPS) as u64);
@@ -45,11 +38,14 @@ impl<'sys> Scheduler<'sys> {
         let task_loop = TaskLoop::new(task_rx);
         let task_dispatcher = TaskDispatcher::new(task_tx);
 
-        (task_dispatcher, Self {
-            events: event_loop,
-            tasks: task_loop,
-            parked_at: None,
-        })
+        (
+            task_dispatcher,
+            Self {
+                events: event_loop,
+                tasks: task_loop,
+                parked_at: None,
+            },
+        )
     }
 
     /// Processes all the pending events, tasks and optionally parks the scheduler (to throttle
@@ -99,8 +95,6 @@ impl<'sys> Scheduler<'sys> {
             }
         }
 
-        self.parked_at = Some(
-            Instant::now(),
-        );
+        self.parked_at = Some(Instant::now());
     }
 }

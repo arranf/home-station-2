@@ -26,22 +26,33 @@ impl<State> System<State> {
     }
 
     pub fn start(self, main: RouteId) {
-        let System { config, state, router } = self;
+        let System {
+            config,
+            state,
+            router,
+        } = self;
 
-        let mut state = state.expect("system has not been properly initialized - did you forget to invoke `setup_state`?");
+        let mut state = state.expect(
+            "system has not been properly initialized - did you forget to invoke `setup_state`?",
+        );
 
         let assets = locate_assets();
         let glium = init_glium(&config);
         let conrod = init_conrod(&config, &assets, &glium);
 
         // Extract bootstrap contexts
-        let GliumBootstrapContext { events_loop, display } = glium;
-        let ConrodBootstrapContext { mut ui, mut renderer, image_map } = conrod;
+        let GliumBootstrapContext {
+            events_loop,
+            display,
+        } = glium;
+        let ConrodBootstrapContext {
+            mut ui,
+            mut renderer,
+            image_map,
+        } = conrod;
 
         // Initialize scheduler
-        let (task_dispatcher, mut scheduler) = Scheduler::new(
-            events_loop, &display,
-        );
+        let (task_dispatcher, mut scheduler) = Scheduler::new(events_loop, &display);
 
         // Initialize texture controller
         let mut texture_ctrl = TextureController::new(&display, image_map);
@@ -52,11 +63,14 @@ impl<State> System<State> {
         let mut navigation_ctrl = NavigationController::new(&router);
 
         // Navigate to the home page
-        navigation_ctrl.navigate_to(ScreenCreationContext {
-            state: &mut state,
-            tasks: task_dispatcher,
-            ui: &mut ui,
-        }, main);
+        navigation_ctrl.navigate_to(
+            ScreenCreationContext {
+                state: &mut state,
+                tasks: task_dispatcher,
+                ui: &mut ui,
+            },
+            main,
+        );
 
         debug!("Entering event loop");
 
@@ -88,9 +102,7 @@ impl<State> System<State> {
                     .draw(&display.0, &mut frame, &image_map)
                     .expect("failed to draw UI: ");
 
-                frame
-                    .finish()
-                    .expect("failed to finish drawing UI: ");
+                frame.finish().expect("failed to finish drawing UI: ");
             }
         }
     }

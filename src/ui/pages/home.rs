@@ -1,7 +1,4 @@
-pub use self::{
-    route::*,
-    screen::*,
-};
+pub use self::{route::*, screen::*};
 
 mod route;
 mod screen;

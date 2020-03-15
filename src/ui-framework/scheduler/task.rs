@@ -6,7 +6,5 @@ pub type TaskRx = Receiver<Task>;
 #[derive(Debug)]
 pub enum Task {
     // Navigation-related commands
-    NavigateTo {
-        id: String,
-    },
+    NavigateTo { id: String },
 }

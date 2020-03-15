@@ -17,7 +17,7 @@ impl<'sys> EventLoop<'sys> {
         }
     }
 
-    pub fn iter(&mut self) -> impl Iterator<Item=Event> + '_ {
+    pub fn iter(&mut self) -> impl Iterator<Item = Event> + '_ {
         let display = &self.display;
         let events = &mut self.events;
 

@@ -4,7 +4,5 @@ use lib_service_common::Time;
 
 #[derive(Debug)]
 pub enum TimeRequest {
-    GetTime {
-        tx: Sender<Time>,
-    },
+    GetTime { tx: Sender<Time> },
 }

@@ -18,12 +18,8 @@ pub struct Config {
 impl Config {
     /// Loads HomeStation's configuration from specified file.
     pub fn from_file(path: &Path) -> Self {
-        let config = fs::read_to_string(path).expect(
-            "failed to open the configuration file: "
-        );
+        let config = fs::read_to_string(path).expect("failed to open the configuration file: ");
 
-        toml::from_str(&config).expect(
-            "failed to parse the configuration file: "
-        )
+        toml::from_str(&config).expect("failed to parse the configuration file: ")
     }
 }

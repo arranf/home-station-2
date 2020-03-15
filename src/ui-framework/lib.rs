@@ -2,13 +2,7 @@
 extern crate log;
 
 pub use self::{
-    bootstrap::*,
-    config::*,
-    navigation::*,
-    scheduler::*,
-    screen::*,
-    support::*,
-    system::*,
+    bootstrap::*, config::*, navigation::*, scheduler::*, screen::*, support::*, system::*,
     textures::*,
 };
 

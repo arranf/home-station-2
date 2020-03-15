@@ -2,10 +2,7 @@ use std::sync::mpsc::{channel, Sender};
 use std::thread::{sleep, spawn};
 use std::time::Duration;
 
-pub use self::{
-    command::*,
-    token::*,
-};
+pub use self::{command::*, token::*};
 
 mod command;
 mod token;
@@ -32,10 +29,7 @@ impl<Context> ServicePoller<Context> {
 }
 
 impl<Context: Send + 'static> ServicePoller<Context> {
-    pub fn run(
-        self,
-        mut handler: impl FnMut(&mut Context) + Send + 'static,
-    ) -> ServicePollerToken {
+    pub fn run(self, mut handler: impl FnMut(&mut Context) + Send + 'static) -> ServicePollerToken {
         let mut context = self.context;
         let interval = self.interval.unwrap();
 

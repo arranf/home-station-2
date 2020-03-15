@@ -9,7 +9,9 @@ pub struct Router<State> {
 
 impl<State> Router<State> {
     pub fn new() -> Self {
-        Self { routes: HashMap::new() }
+        Self {
+            routes: HashMap::new(),
+        }
     }
 
     pub fn add(&mut self, id: RouteId, route: impl Route<State> + 'static) {
@@ -17,8 +19,6 @@ impl<State> Router<State> {
     }
 
     pub fn get(&self, id: &str) -> Option<&dyn Route<State>> {
-        self.routes
-            .get(id)
-            .map(Deref::deref)
+        self.routes.get(id).map(Deref::deref)
     }
 }

@@ -29,9 +29,7 @@ impl Provider {
 
 impl WeatherService for Provider {
     fn current(&mut self) -> Weather {
-        let weather = WeatherHub::new(
-            hyper::Client::new(), &self.config.api_key,
-        );
+        let weather = WeatherHub::new(hyper::Client::new(), &self.config.api_key);
 
         let (_, weather) = weather
             .current()

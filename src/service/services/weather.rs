@@ -1,8 +1,4 @@
-pub use self::{
-    client::*,
-    request::*,
-    server::*,
-};
+pub use self::{client::*, request::*, server::*};
 
 mod client;
 mod request;

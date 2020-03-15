@@ -5,8 +5,8 @@ use std::path::{Component, Path, PathBuf};
 
 use glium::texture::RawImage2d;
 
-use crate::Display;
 use crate::vendor::{Texture2d, TextureName};
+use crate::Display;
 
 pub struct TextureLoader;
 
@@ -17,13 +17,9 @@ impl TextureLoader {
             .unwrap()
             .components()
             .filter_map(|component| match component {
-                Component::Normal(str) => {
-                    Some(str.to_string_lossy().to_string())
-                }
+                Component::Normal(str) => Some(str.to_string_lossy().to_string()),
 
-                _ => {
-                    None
-                }
+                _ => None,
             })
             .collect();
 
@@ -44,9 +40,7 @@ impl TextureLoader {
 
         let mut textures = HashMap::new();
 
-        let mut pending_dirs = vec![
-            PathBuf::from(path),
-        ];
+        let mut pending_dirs = vec![PathBuf::from(path)];
 
         while let Some(dir) = pending_dirs.pop() {
             for entry in fs::read_dir(&dir).unwrap() {
@@ -79,16 +73,12 @@ impl TextureLoader {
     }
 
     fn load_png(display: &Display, texture: &Path) -> Texture2d {
-        let image = image::open(texture)
-            .unwrap()
-            .to_rgba();
+        let image = image::open(texture).unwrap().to_rgba();
 
         let image_dim = image.dimensions();
         let image_data = image.into_raw();
 
-        let texture = RawImage2d::from_raw_rgba_reversed(
-            &image_data, image_dim,
-        );
+        let texture = RawImage2d::from_raw_rgba_reversed(&image_data, image_dim);
 
         Texture2d::new(&display.0, texture).unwrap()
     }

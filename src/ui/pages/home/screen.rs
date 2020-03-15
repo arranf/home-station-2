@@ -1,8 +1,8 @@
 use std::sync::mpsc::{channel, Receiver};
 use std::time::Duration;
 
-use conrod_core::Widget;
 use conrod_core::widget::Canvas;
+use conrod_core::Widget;
 
 use lib_service::{ServicePoller, ServicePollerToken};
 use lib_service_common::{Time, Weather};

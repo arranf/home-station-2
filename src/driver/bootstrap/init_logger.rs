@@ -20,7 +20,11 @@ pub fn init_logger(config: &Config) {
                 message
             ))
         })
-        .level(if config.app.debug { LevelFilter::Trace } else { LevelFilter::Error })
+        .level(if config.app.debug {
+            LevelFilter::Trace
+        } else {
+            LevelFilter::Error
+        })
         .level_for("hyper", LevelFilter::Off)
         .level_for("mio", LevelFilter::Off)
         .level_for("reqwest", LevelFilter::Off)

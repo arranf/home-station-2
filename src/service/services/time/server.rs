@@ -18,9 +18,7 @@ impl TimeServer {
     pub fn spawn(service: Box<dyn TimeService>) -> Sender<TimeRequest> {
         let (tx, rx) = channel();
 
-        thread::spawn(move || {
-            Self::new(service, rx).start()
-        });
+        thread::spawn(move || Self::new(service, rx).start());
 
         tx
     }

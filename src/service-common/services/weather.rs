@@ -39,16 +39,20 @@ pub struct WeatherForecast {
 
 impl fmt::Display for WeatherIcon {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", match self {
-            WeatherIcon::Cloud => "cloud",
-            WeatherIcon::Fog => "fog",
-            WeatherIcon::HeavyCloud => "heavy-cloud",
-            WeatherIcon::HeavyRain => "heavy-rain",
-            WeatherIcon::Rain => "rain",
-            WeatherIcon::Snow => "snow",
-            WeatherIcon::Sun => "sun",
-            WeatherIcon::SunWithCloud => "sun-with-cloud",
-            WeatherIcon::Thunderstorm => "thunderstorm",
-        })
+        write!(
+            f,
+            "{}",
+            match self {
+                WeatherIcon::Cloud => "cloud",
+                WeatherIcon::Fog => "fog",
+                WeatherIcon::HeavyCloud => "heavy-cloud",
+                WeatherIcon::HeavyRain => "heavy-rain",
+                WeatherIcon::Rain => "rain",
+                WeatherIcon::Snow => "snow",
+                WeatherIcon::Sun => "sun",
+                WeatherIcon::SunWithCloud => "sun-with-cloud",
+                WeatherIcon::Thunderstorm => "thunderstorm",
+            }
+        )
     }
 }

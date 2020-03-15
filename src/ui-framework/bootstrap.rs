@@ -1,8 +1,4 @@
-pub use self::{
-    assets::*,
-    conrod::*,
-    glium::*,
-};
+pub use self::{assets::*, conrod::*, glium::*};
 
 mod assets;
 mod conrod;

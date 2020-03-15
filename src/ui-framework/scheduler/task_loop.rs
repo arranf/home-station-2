@@ -9,7 +9,7 @@ impl TaskLoop {
         Self { rx }
     }
 
-    pub fn iter(&mut self) -> impl Iterator<Item=Task> + '_ {
+    pub fn iter(&mut self) -> impl Iterator<Item = Task> + '_ {
         self.rx.try_iter()
     }
 }

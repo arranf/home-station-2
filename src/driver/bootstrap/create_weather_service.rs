@@ -14,9 +14,7 @@ pub fn create_weather_service(config: &Config) -> Box<dyn WeatherService> {
             Box::new(dark_sky::Service::new(config))
         }
 
-        WeatherServiceName::Dummy => {
-            Box::new(dummy::Provider::new())
-        }
+        WeatherServiceName::Dummy => Box::new(dummy::Provider::new()),
 
         WeatherServiceName::OpenWeatherMap => {
             let config = config

@@ -17,9 +17,7 @@ impl TimeClient {
     pub fn get_time(&self) -> Time {
         let (tx, rx) = channel();
 
-        self.tx
-            .send(TimeRequest::GetTime { tx })
-            .unwrap();
+        self.tx.send(TimeRequest::GetTime { tx }).unwrap();
 
         rx.recv().unwrap()
     }

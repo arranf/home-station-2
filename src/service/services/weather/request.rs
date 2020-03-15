@@ -4,11 +4,7 @@ use lib_service_common::{Weather, WeatherForecast};
 
 #[derive(Debug)]
 pub enum WeatherRequest {
-    GetWeather {
-        tx: Sender<Weather>,
-    },
+    GetWeather { tx: Sender<Weather> },
 
-    GetWeatherForecast {
-        tx: Sender<Option<WeatherForecast>>,
-    },
+    GetWeatherForecast { tx: Sender<Option<WeatherForecast>> },
 }
