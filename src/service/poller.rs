@@ -7,30 +7,30 @@ pub use self::{command::*, token::*};
 mod command;
 mod token;
 
-pub struct ServicePoller<Context> {
-    context: Context,
+pub struct ServicePoller<Client> {
+    client: Client,
     interval: Option<Duration>,
 }
 
-impl<Context: Clone> ServicePoller<Context> {
-    pub fn new(context: &Context) -> Self {
+impl<Client: Clone> ServicePoller<Client> {
+    pub fn new(client: &Client) -> Self {
         Self {
-            context: context.clone(),
+            client: client.clone(),
             interval: None,
         }
     }
 }
 
-impl<Context> ServicePoller<Context> {
+impl<Client> ServicePoller<Client> {
     pub fn each(mut self, interval: Duration) -> Self {
         self.interval = Some(interval);
         self
     }
 }
 
-impl<Context: Send + 'static> ServicePoller<Context> {
-    pub fn run(self, mut handler: impl FnMut(&mut Context) + Send + 'static) -> ServicePollerToken {
-        let mut context = self.context;
+impl<Client: Send + 'static> ServicePoller<Client> {
+    pub fn run(self, mut handler: impl FnMut(&mut Client) + Send + 'static) -> ServicePollerToken {
+        let mut client = self.client;
         let interval = self.interval.unwrap();
 
         let (tx, rx) = channel();
@@ -41,7 +41,7 @@ impl<Context: Send + 'static> ServicePoller<Context> {
                 return;
             }
 
-            handler(&mut context);
+            handler(&mut client);
             debug!("Run handler");
 
             sleep(interval);
@@ -53,12 +53,12 @@ impl<Context: Send + 'static> ServicePoller<Context> {
     pub fn send<Event: Send + 'static>(
         self,
         tx: &Sender<Event>,
-        mut handler: impl (FnMut(&mut Context) -> Event) + Send + 'static,
+        mut handler: impl (FnMut(&mut Client) -> Event) + Send + 'static,
     ) -> ServicePollerToken {
         let tx = tx.clone();
 
-        self.run(move |context| {
-            tx.send(handler(context)).unwrap();
+        self.run(move |client| {
+            tx.send(handler(client)).unwrap();
         })
     }
 }
