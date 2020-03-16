@@ -1,0 +1,24 @@
+[app]
+debug = true
+language = 'pl' # Not implemented
+
+air-service = 'dummy' # Not implemented
+time-service = 'chrono' # 'chrono' or 'dummy'
+weather-service = 'dark-sky' # 'dummy', 'open-weather-map', or 'dark sky'
+
+[display]
+width = 800
+height = 480
+
+[services.airly] # Not implemented
+api-key = ''
+
+[services.dark-sky]
+api-key = 'abcdef2342432' # Example API key
+latitude = 0.0000
+longitude = 0.000
+
+[services.open-weather-map]
+api-key = '8abcedf3453453'  # Example API key
+city = 'Greenwich'
+country = 'GB'
