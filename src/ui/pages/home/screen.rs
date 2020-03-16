@@ -47,7 +47,7 @@ impl HomeScreen {
             });
 
         let _weather_token = ServicePoller::new(&state.weather)
-            .each(Duration::from_millis(500))
+            .each(Duration::from_secs(120)) // @todo Make this a config option
             .send(&event_tx, move |weather| {
                 HomeEvent::UpdateWeather(weather.get_weather())
             });
