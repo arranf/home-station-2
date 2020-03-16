@@ -97,7 +97,7 @@ impl WeatherWidget {
     }
 
     fn temperature(status: &Weather) -> Option<String> {
-        Some(format!("{:.01} C", status.temperature?))
+        Some(format!("{:.01} C", status.temperature?)) // @todo Make sure this uses the correct C/F setting
     }
 
     fn pressure(status: &Weather) -> Option<String> {
@@ -109,7 +109,7 @@ impl WeatherWidget {
     }
 
     fn wind_speed(status: &Weather) -> Option<String> {
-        Some(format!("{:.0} mph", status.wind_speed?))
+        Some(format!("{:.0} mph", status.wind_speed?)) // @todo Make sure this displays with the correct setting for suffix (mph, kmh)
     }
 }
 

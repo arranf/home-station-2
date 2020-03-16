@@ -43,7 +43,7 @@ impl Service {
         )
         .extend(ExtendBy::Hourly)
         .lang(Lang::English)
-        .units(Units::UK)
+        .units(Units::UK) // @todo Make sure this fetches with the correct units
         .build();
 
         ApiClient::new(&self.client)
