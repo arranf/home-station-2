@@ -1,4 +1,4 @@
-use std::sync::mpsc::channel;
+use std::sync::mpsc::{channel, Sender};
 use std::thread::sleep;
 use std::time::{Duration, Instant};
 
@@ -80,7 +80,7 @@ impl<'sys> Scheduler<'sys> {
 
     /// Processes all the pending tasks.
     fn process_tasks(&mut self) {
-        for task in self.tasks.iter() {
+        for _task in self.tasks.iter() {
             // @todo
         }
     }
@@ -96,5 +96,19 @@ impl<'sys> Scheduler<'sys> {
         }
 
         self.parked_at = Some(Instant::now());
+    }
+
+    pub fn push_subscription<Event: Send + 'static, Client>(
+        self,
+        _subscription_id: &str,
+        _frequency: Duration,
+        _tx: &Sender<Event>,
+        mut _handler: impl (FnMut(&mut Client) -> Event) + Send + 'static,
+    ) {
+        // @todo
+        // Rather than on each screen setting up `ServicePoller`s that infinitely fetch on a schedule
+        // Reimplmeent service pollers here as a subscription that can be desubscribed to (we'll assume only one screen can be shown at once and widgets won't overlap subcriptions)
+        // During each task loop, we check the amount of time that's passed and if the time has execeded the duration here we'll run that task
+        // The handler will produce an event which will sent back down the tx
     }
 }
