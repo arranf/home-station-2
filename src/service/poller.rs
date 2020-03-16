@@ -35,12 +35,14 @@ impl<Context: Send + 'static> ServicePoller<Context> {
 
         let (tx, rx) = channel();
 
-        spawn(move || {
+        spawn(move || loop {
             if rx.try_recv() == Ok(ServicePollerCommand::Terminate) {
+                debug!("Receiving terminate command");
                 return;
             }
 
             handler(&mut context);
+            debug!("Run handler");
 
             sleep(interval);
         });

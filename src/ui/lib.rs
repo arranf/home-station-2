@@ -1,6 +1,9 @@
 #[macro_use]
 extern crate conrod_core;
 
+#[macro_use]
+extern crate log;
+
 use lib_ui_framework::System;
 pub use state::State;
 
