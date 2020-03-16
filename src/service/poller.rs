@@ -42,8 +42,6 @@ impl<Client: Send + 'static> ServicePoller<Client> {
             }
 
             handler(&mut client);
-            debug!("Run handler");
-
             sleep(interval);
         });
 
