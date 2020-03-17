@@ -26,6 +26,7 @@ pub struct Scheduler<'sys> {
     events: EventLoop<'sys>,
     tasks: TaskLoop,
     parked_at: Option<Instant>,
+    display_on: bool,
 }
 
 impl<'sys> Scheduler<'sys> {
@@ -44,6 +45,7 @@ impl<'sys> Scheduler<'sys> {
                 events: event_loop,
                 tasks: task_loop,
                 parked_at: None,
+                display_on: true,
             },
         )
     }
@@ -67,14 +69,29 @@ impl<'sys> Scheduler<'sys> {
     fn process_events(&mut self) -> bool {
         for event in self.events.iter() {
             match event {
-                Event::Input(input) => {
-                    if input == Input::Press(Button::Keyboard(Key::Escape)) {
-                        return false;
+                Event::Input(input) => match input {
+                    Input::Press(Button::Keyboard(key)) => match key {
+                        Key::Escape => return false,
+                        _ => {}
+                    },
+                    Input::Press(Button::Mouse(_)) | Input::Touch(_) => {
+                        if self.display_on {
+                            std::process::Command::new("xset")
+                                .args(&["dpms", "force", "off"])
+                                .spawn()
+                                .expect("Unable to set screen off");
+                        } else {
+                            std::process::Command::new("xset")
+                                .args(&["dpms", "force", "on"])
+                                .spawn()
+                                .expect("Unable to set screen off");
+                        }
+                        self.display_on = !self.display_on;
                     }
-                }
+                    _ => {}
+                },
             }
         }
-
         true
     }
 

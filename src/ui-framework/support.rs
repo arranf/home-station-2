@@ -11,5 +11,4 @@ impl conrod_winit::WinitWindow for Display {
         self.0.gl_window().get_hidpi_factor() as _
     }
 }
-
 conrod_winit::conversion_fns!();

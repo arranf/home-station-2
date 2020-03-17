@@ -42,3 +42,6 @@ Then create an `~/.xinitrc` file that looks like:
 ```bash
 /home/pi/home-station-2
 ```
+
+Optional: 
+* [Stop the display from sleeping](https://www.raspberrypi.org/forums/viewtopic.php?t=232009)
