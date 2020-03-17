@@ -48,7 +48,8 @@ impl TimeWidget {
                 .middle_of(self.ids.time_wrapper)
                 .y_position_relative(Scalar(15.0))
                 .color(color::WHITE)
-                .font_size(140)
+                .font_size(120)
+                .font_id(ctx.ui.fonts.ids().last().unwrap())
                 .set(self.ids.time, ctx.ui);
 
             // @todo Print the weekday in a human readable format

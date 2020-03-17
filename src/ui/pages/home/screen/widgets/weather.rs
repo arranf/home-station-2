@@ -66,7 +66,7 @@ impl WeatherWidget {
                 Text::new(&temperature)
                     .mid_bottom_of(self.ids.temperature_wrapper)
                     .color(color::WHITE)
-                    .font_size(50)
+                    .font_size(45)
                     .set(self.ids.temperature, ctx.ui);
             }
 
@@ -74,7 +74,7 @@ impl WeatherWidget {
                 Text::new(&pressure)
                     .mid_top_of(self.ids.pressure_wrapper)
                     .color(color::WHITE)
-                    .font_size(50)
+                    .font_size(45)
                     .set(self.ids.pressure, ctx.ui);
             }
 
@@ -82,7 +82,7 @@ impl WeatherWidget {
                 Text::new(&humidity)
                     .mid_bottom_of(self.ids.humidity_wrapper)
                     .color(color::WHITE)
-                    .font_size(50)
+                    .font_size(45)
                     .set(self.ids.humidity, ctx.ui);
             }
 
@@ -90,7 +90,7 @@ impl WeatherWidget {
                 Text::new(&wind_speed)
                     .mid_top_of(self.ids.wind_speed_wrapper)
                     .color(color::WHITE)
-                    .font_size(50)
+                    .font_size(45)
                     .set(self.ids.wind_speed, ctx.ui);
             }
         }

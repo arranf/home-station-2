@@ -30,8 +30,7 @@ pub fn init_conrod(
     debug!("-> fonts");
 
     let fonts = assets.join("app").join("fonts");
-
-    for font in &["FiraSans-Light.ttf", "FiraSans-Regular.ttf"] {
+    for font in &["OxygenMono-Regular.ttf", "Roboto-Regular.ttf"] {
         ui.fonts.insert_from_file(fonts.join(font)).unwrap();
     }
 
