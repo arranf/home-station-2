@@ -20,3 +20,4 @@ lib_service_common = { path = "../service-common" }
 lib_ui_framework = { path = "../ui-framework" }
 log = "0.4.7"
 winit = "0.19.1"
+chrono = "0.4.11"

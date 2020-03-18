@@ -11,3 +11,4 @@ path = "lib.rs"
 [dependencies]
 lib_service_common = { path = "../../service-common" }
 log = "0.4"
+chrono = "0.4.11"

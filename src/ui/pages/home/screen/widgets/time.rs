@@ -2,6 +2,7 @@ use conrod_core::position::Relative::Scalar;
 use conrod_core::widget::{Canvas, Id as WidgetId, Text};
 use conrod_core::{color, Colorable, Positionable, Sizeable, Ui, Widget};
 
+use chrono::Weekday;
 use lib_service_common::Time;
 use lib_ui_framework::ScreenSettingContext;
 
@@ -53,16 +54,16 @@ impl TimeWidget {
                 .set(self.ids.time, ctx.ui);
 
             // @todo Print the weekday in a human readable format
-            //            Text::new(&status.human_weekday)
-            //                .mid_bottom_of(self.ids.weekday_wrapper)
-            //                .color(color::WHITE)
-            //                .font_size(50)
-            //                .set(self.ids.weekday, ctx.ui);
-
-            Text::new(&Self::date(status))
-                .mid_top_of(self.ids.date_wrapper)
+            Text::new(Self::weekday(&status))
+                .mid_bottom_of(self.ids.weekday_wrapper)
                 .color(color::WHITE)
                 .font_size(50)
+                .set(self.ids.weekday, ctx.ui);
+
+            Text::new(&Self::date(&status).to_ascii_uppercase())
+                .mid_top_of(self.ids.date_wrapper)
+                .color(color::WHITE)
+                .font_size(40)
                 .set(self.ids.date, ctx.ui);
         }
     }
@@ -74,7 +75,19 @@ impl TimeWidget {
     }
 
     fn date(status: &Time) -> String {
-        format!("{}/{}/{}", status.day, status.month, status.year) // @todo A more human readable date
+        format!("{}/{}", status.day, status.month) // @todo A more human readable date
+    }
+
+    fn weekday(status: &Time) -> &str {
+        match status.weekday {
+            Weekday::Mon => "Monday",
+            Weekday::Tue => "Tuesday",
+            Weekday::Wed => "Wednesday",
+            Weekday::Thu => "Thursday",
+            Weekday::Fri => "Friday",
+            Weekday::Sat => "Saturday",
+            Weekday::Sun => "Sunday",
+        }
     }
 }
 

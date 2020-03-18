@@ -1,6 +1,8 @@
 #[macro_use]
 extern crate log;
 
+use chrono::Weekday;
+
 use lib_service_common::{
     Time, TimeService, Weather, WeatherForecast, WeatherIcon, WeatherService,
 };
@@ -18,13 +20,13 @@ impl Provider {
 impl TimeService for Provider {
     fn current(&mut self) -> Time {
         Time {
-            hour: 12,
-            minute: 0,
+            hour: 13,
+            minute: 37,
             second: 0,
-
-            day: 1,
-            month: 1,
-            year: 1980,
+            weekday: Weekday::Wed,
+            day: 21,
+            month: 9,
+            year: 1994,
         }
     }
 }

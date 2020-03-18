@@ -23,7 +23,7 @@ impl TimeService for Service {
             hour: now.hour(),
             minute: now.minute(),
             second: now.second(),
-
+            weekday: now.weekday(),
             day: now.day(),
             month: now.month(),
             year: now.year(),
