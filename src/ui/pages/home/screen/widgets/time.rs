@@ -2,7 +2,6 @@ use conrod_core::position::Relative::Scalar;
 use conrod_core::widget::{Canvas, Id as WidgetId, Text};
 use conrod_core::{color, Colorable, Positionable, Sizeable, Ui, Widget};
 
-use chrono::Weekday;
 use lib_service_common::Time;
 use lib_ui_framework::ScreenSettingContext;
 
@@ -36,35 +35,35 @@ impl TimeWidget {
                     (
                         self.ids.main_right,
                         Canvas::new()
-                            .flow_down(&[
-                                (self.ids.weekday_wrapper, Canvas::new().pad_bottom(15.0)),
-                                (self.ids.date_wrapper, Canvas::new().pad_top(0.0)),
-                            ])
-                            .length_weight(1.15),
+                            .flow_down(&[(self.ids.date_wrapper, Canvas::new().pad_top(30.0))]),
                     ),
                 ])
                 .set(self.ids.main, ctx.ui);
 
+            // Time
             Text::new(&Self::time(status))
                 .middle_of(self.ids.time_wrapper)
                 .y_position_relative(Scalar(15.0))
                 .color(color::WHITE)
-                .font_size(120)
+                .font_size(105)
                 .font_id(ctx.ui.fonts.ids().last().unwrap())
                 .set(self.ids.time, ctx.ui);
 
-            // @todo Print the weekday in a human readable format
-            Text::new(Self::weekday(&status))
-                .mid_bottom_of(self.ids.weekday_wrapper)
-                .color(color::WHITE)
-                .font_size(50)
-                .set(self.ids.weekday, ctx.ui);
-
+            // Date
             Text::new(&Self::date(&status).to_ascii_uppercase())
                 .mid_top_of(self.ids.date_wrapper)
                 .color(color::WHITE)
-                .font_size(40)
+                .font_size(60)
                 .set(self.ids.date, ctx.ui);
+
+            // @todo Find a way to elegantly display weekdays in the UI
+            // Weekday
+            // Text::new(Self::weekday(&status))
+            //     .mid_top_of(self.ids.date_wrapper)
+            //     .color(color::WHITE)
+            //     .font_size(40)
+            //     // .font_id(ctx.ui.fonts.ids().next().unwrap())
+            //     .set(self.ids.weekday, ctx.ui);
         }
     }
 
@@ -75,20 +74,20 @@ impl TimeWidget {
     }
 
     fn date(status: &Time) -> String {
-        format!("{}/{}", status.day, status.month) // @todo A more human readable date
+        format!("{} / {} / {}", status.day, status.month, status.year) // @todo A more human readable date
     }
 
-    fn weekday(status: &Time) -> &str {
-        match status.weekday {
-            Weekday::Mon => "Monday",
-            Weekday::Tue => "Tuesday",
-            Weekday::Wed => "Wednesday",
-            Weekday::Thu => "Thursday",
-            Weekday::Fri => "Friday",
-            Weekday::Sat => "Saturday",
-            Weekday::Sun => "Sunday",
-        }
-    }
+    // fn weekday(status: &Time) -> &str {
+    //     match status.weekday {
+    //         Weekday::Mon => "Monday",
+    //         Weekday::Tue => "Tuesday",
+    //         Weekday::Wed => "Wednesday",
+    //         Weekday::Thu => "Thursday",
+    //         Weekday::Fri => "Friday",
+    //         Weekday::Sat => "Saturday",
+    //         Weekday::Sun => "Sunday",
+    //     }
+    // }
 }
 
 widget_ids! {
