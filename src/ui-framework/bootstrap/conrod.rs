@@ -1,3 +1,4 @@
+use log::debug;
 use std::path::PathBuf;
 
 use conrod_core::{image, Ui, UiBuilder};
@@ -30,10 +31,7 @@ pub fn init_conrod(
     debug!("-> fonts");
 
     let fonts = assets.join("app").join("fonts");
-    for font in &[
-        "CourierPrime-Regular.ttf",
-        "SourceSansPro-Regular.ttf",
-    ] {
+    for font in &["CourierPrime-Regular.ttf", "SourceSansPro-Regular.ttf"] {
         ui.fonts.insert_from_file(fonts.join(font)).unwrap();
     }
 

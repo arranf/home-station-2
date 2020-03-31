@@ -1,3 +1,5 @@
+use log::debug;
+
 use std::fmt::Debug;
 use std::sync::mpsc::{channel, Sender};
 use std::thread::{sleep, spawn};

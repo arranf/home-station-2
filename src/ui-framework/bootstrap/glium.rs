@@ -1,3 +1,5 @@
+use log::debug;
+
 use glium::glutin::{ContextBuilder, EventsLoop, WindowBuilder};
 
 use crate::{Config, Display};

@@ -1,5 +1,4 @@
-#[macro_use]
-extern crate log;
+use log::trace;
 
 use chrono::{Datelike, Local, Timelike};
 

@@ -1,8 +1,5 @@
 #![warn(clippy::all, clippy::pedantic)]
 
-#[macro_use]
-extern crate log;
-
 pub use self::{
     bootstrap::*, config::*, navigation::*, scheduler::*, screen::*, support::*, system::*,
     textures::*,

@@ -1,10 +1,8 @@
-#[macro_use]
-extern crate log;
-
 use anyhow::{anyhow, Result};
 use forecast::{
     ApiClient, ApiResponse, DataPoint, ExtendBy, ForecastRequestBuilder, Icon, Lang, Units,
 };
+use log::info;
 use reqwest::Client;
 use serde::Deserialize;
 

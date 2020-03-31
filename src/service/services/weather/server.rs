@@ -1,3 +1,5 @@
+use log::trace;
+
 use std::sync::mpsc::{channel, Receiver, Sender};
 use std::thread;
 

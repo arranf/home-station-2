@@ -1,8 +1,6 @@
-#[macro_use]
-extern crate log;
-
 use anyhow::{anyhow, Result};
 use chrono::Weekday;
+use log::info;
 
 use lib_service_common::{
     Time, TimeService, Weather, WeatherForecast, WeatherIcon, WeatherService,

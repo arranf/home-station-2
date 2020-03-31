@@ -4,6 +4,7 @@ use std::fs;
 use std::path::{Component, Path, PathBuf};
 
 use glium::texture::RawImage2d;
+use log::debug;
 
 use crate::vendor::{Texture2d, TextureName};
 use crate::Display;

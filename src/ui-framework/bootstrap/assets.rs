@@ -1,3 +1,5 @@
+use log::debug;
+
 use std::path::PathBuf;
 
 pub fn locate_assets() -> PathBuf {
