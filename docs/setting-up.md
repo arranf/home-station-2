@@ -1,13 +1,15 @@
 # Setting up HomeStation 2
 
 ## Requirements
+
 - [Rust 1.38.0 or newer](https://rustup.rs/)
 - A Raspberry Pi
 - Docker daemon (for cross compilation)
 
+## Setup
 
-## Setup.
 ### Configuration
+
 To configure the application you'll need to create a `config.toml` file. This will be read at runtime, not compile time so will need to exist on the Raspberry Pi.
 An example configuration is included `config.example.toml`, you should copy it (`cp config.example.toml config.toml`) and edit it. It by default uses dummy data.
 
