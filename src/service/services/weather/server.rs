@@ -11,7 +11,7 @@ pub struct WeatherServer {
 }
 
 impl WeatherServer {
-    pub fn new(service: Box<dyn WeatherService>, rx: Receiver<WeatherRequest>) -> Self {
+    fn new(service: Box<dyn WeatherService>, rx: Receiver<WeatherRequest>) -> Self {
         Self { service, rx }
     }
 
@@ -23,17 +23,19 @@ impl WeatherServer {
         tx
     }
 
-    pub fn start(mut self) {
+    fn start(mut self) {
         for request in self.rx.iter() {
             trace!("Processing request: {:?}", request);
 
             match request {
                 WeatherRequest::GetWeather { tx } => {
-                    tx.send(self.service.current()).unwrap();
+                    tx.send(self.service.current())
+                        .expect("Error sending current weather to WeatherClient");
                 }
 
                 WeatherRequest::GetWeatherForecast { tx } => {
-                    tx.send(self.service.forecast()).unwrap();
+                    tx.send(self.service.forecast())
+                        .expect("Error sending weather forecast to WeatherClient");
                 }
             }
         }

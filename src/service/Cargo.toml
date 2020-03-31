@@ -2,7 +2,7 @@
 name = "lib_service"
 version = "0.1.0"
 license = "MIT"
-authors = ["Patryk Wychowaniec <wychowaniec.patryk@gmail.com>"]
+authors = ["Arran France <arran@arranfrance.com>", "Patryk Wychowaniec <wychowaniec.patryk@gmail.com>"]
 edition = "2018"
 
 [lib]
@@ -12,3 +12,4 @@ path = "lib.rs"
 lib_service_common = { path = "../service-common" }
 log = "0.4"
 serde = { version = "1.0", features = ["derive"] }
+anyhow="1.0"

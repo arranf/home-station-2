@@ -14,3 +14,4 @@ lib_service_common = { path = "../../service-common" }
 log = "0.4"
 owm = { git = "https://github.com/plorefice/owm-rs" }
 serde = { version = "1.0", features = ["derive"] }
+anyhow = "1.0"

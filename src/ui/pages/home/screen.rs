@@ -1,6 +1,7 @@
 use std::sync::mpsc::{channel, Receiver};
 use std::time::Duration;
 
+use anyhow::Result;
 use conrod_core::widget::Canvas;
 use conrod_core::Widget;
 
@@ -14,6 +15,7 @@ use self::widgets::*;
 
 mod widgets;
 
+// The time_token and weather_token are stored here but not used because when they are droppped `ServicePollerToken` sends a termination request to the `Poller`.
 pub struct HomeScreen {
     ids: Ids,
 
@@ -29,7 +31,7 @@ pub struct HomeScreen {
 #[derive(Debug)]
 enum HomeEvent {
     UpdateTime(Time),
-    UpdateWeather(Weather),
+    UpdateWeather(Result<Weather>),
 }
 
 impl HomeScreen {
@@ -43,7 +45,8 @@ impl HomeScreen {
         let time_token = ServicePoller::new(&state.time)
             .each(Duration::from_millis(500))
             .send(&event_tx, move |time| {
-                HomeEvent::UpdateTime(time.get_time())
+                // @todo Figure out a sensible error handling pattern here. If the time fails we probably do want it to panic.
+                HomeEvent::UpdateTime(time.get_time().expect("Failed to get time"))
             });
 
         let weather_token = ServicePoller::new(&state.weather)
@@ -75,7 +78,14 @@ impl Screen for HomeScreen {
                 }
 
                 HomeEvent::UpdateWeather(weather) => {
-                    self.weather.update(weather);
+                    match weather {
+                        Ok(weather) => {
+                            self.weather.update(weather);
+                        }
+                        Err(_) => {
+                            // @todo Mark weather as being stale
+                        }
+                    }
                 }
             }
         }

@@ -1,8 +1,10 @@
+use anyhow::Result;
+
 use std::fmt;
 
 pub trait WeatherService: Send {
-    fn current(&mut self) -> Weather;
-    fn forecast(&mut self) -> Option<WeatherForecast>;
+    fn current(&mut self) -> Result<Weather>;
+    fn forecast(&mut self) -> Result<WeatherForecast>;
 }
 
 #[derive(Default, Debug)]

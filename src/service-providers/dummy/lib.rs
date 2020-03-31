@@ -1,6 +1,7 @@
 #[macro_use]
 extern crate log;
 
+use anyhow::{anyhow, Result};
 use chrono::Weekday;
 
 use lib_service_common::{
@@ -32,17 +33,17 @@ impl TimeService for Provider {
 }
 
 impl WeatherService for Provider {
-    fn current(&mut self) -> Weather {
-        Weather {
+    fn current(&mut self) -> Result<Weather> {
+        Ok(Weather {
             temperature: Some(20.0),
             pressure: Some(950),
             humidity: Some(55),
             wind_speed: Some(4.0),
             icon: Some(WeatherIcon::SunWithCloud),
-        }
+        })
     }
 
-    fn forecast(&mut self) -> Option<WeatherForecast> {
-        None
+    fn forecast(&mut self) -> Result<WeatherForecast> {
+        Err(anyhow!("Forecast not implemented"))
     }
 }

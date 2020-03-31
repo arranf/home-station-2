@@ -1,6 +1,7 @@
 #[macro_use]
 extern crate log;
 
+use anyhow::Result;
 use owm::WeatherHub;
 use serde::Deserialize;
 
@@ -28,7 +29,7 @@ impl Provider {
 }
 
 impl WeatherService for Provider {
-    fn current(&mut self) -> Weather {
+    fn current(&mut self) -> Result<Weather> {
         let weather = WeatherHub::new(hyper::Client::new(), &self.config.api_key);
 
         let (_, weather) = weather
@@ -36,17 +37,17 @@ impl WeatherService for Provider {
             .by_name(&self.config.city, Some(&self.config.country))
             .unwrap();
 
-        Weather {
+        Ok(Weather {
             temperature: utils::temperature(&weather),
             pressure: utils::pressure(&weather),
             humidity: utils::humidity(&weather),
             wind_speed: utils::wind_speed(&weather),
             icon: utils::icon(&weather),
-        }
+        })
     }
 
-    fn forecast(&mut self) -> Option<WeatherForecast> {
-        None
+    fn forecast(&mut self) -> Result<WeatherForecast> {
+        unimplemented!("Open Weather map doesn't implement forecast")
     }
 }
 

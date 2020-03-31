@@ -1,6 +1,7 @@
 #[macro_use]
 extern crate log;
 
+use anyhow::{anyhow, Result};
 use forecast::{
     ApiClient, ApiResponse, DataPoint, ExtendBy, ForecastRequestBuilder, Icon, Lang, Units,
 };
@@ -35,7 +36,7 @@ impl Service {
 }
 
 impl Service {
-    fn weather(&self) -> ApiResponse {
+    fn weather(&self) -> Result<ApiResponse> {
         let request = ForecastRequestBuilder::new(
             &self.config.api_key,
             self.config.latitude,
@@ -46,24 +47,23 @@ impl Service {
         .units(Units::UK) // @todo Make sure this fetches with the correct units
         .build();
 
-        ApiClient::new(&self.client)
-            .get_forecast(request)
-            .unwrap()
-            .json()
-            .unwrap()
+        Ok(ApiClient::new(&self.client).get_forecast(request)?.json()?)
     }
 }
 
 impl WeatherService for Service {
-    fn current(&mut self) -> Weather {
-        self.weather()
-            .currently
-            .map(utils::weather)
-            .unwrap_or_else(Weather::default)
+    fn current(&mut self) -> Result<Weather> {
+        let weather = self.weather()?;
+        match weather.currently {
+            Some(currently) => Ok(utils::weather(currently)),
+            None => Err(anyhow!(
+                "No current weather found for latest Dark Sky forecast"
+            )),
+        }
     }
 
-    fn forecast(&mut self) -> Option<WeatherForecast> {
-        unimplemented!()
+    fn forecast(&mut self) -> Result<WeatherForecast> {
+        unimplemented!("Dark Sky forecast not implemented")
     }
 }
 
