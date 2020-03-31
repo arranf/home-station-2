@@ -6,7 +6,7 @@ use lib_service_common::{Weather, WeatherForecast};
 
 use crate::WeatherRequest;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct WeatherClient {
     // `WeatherServer` has the `Receiver`
     tx: Sender<WeatherRequest>,

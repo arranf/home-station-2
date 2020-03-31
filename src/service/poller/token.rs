@@ -11,6 +11,7 @@ impl ServicePollerToken {
 }
 
 impl Drop for ServicePollerToken {
+    // When dropped the poller should terminate
     fn drop(&mut self) {
         let _ = self.tx.send(ServicePollerCommand::Terminate);
     }

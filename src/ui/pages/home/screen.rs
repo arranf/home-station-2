@@ -44,15 +44,15 @@ impl HomeScreen {
 
         let time_token = ServicePoller::new(&state.time)
             .each(Duration::from_millis(500))
-            .send(&event_tx, move |time| {
+            .send(&event_tx, |time_client| {
                 // @todo Figure out a sensible error handling pattern here. If the time fails we probably do want it to panic.
-                HomeEvent::UpdateTime(time.get_time().expect("Failed to get time"))
+                HomeEvent::UpdateTime(time_client.get_time().expect("Failed to get time"))
             });
 
         let weather_token = ServicePoller::new(&state.weather)
             .each(Duration::from_secs(120)) // @todo Make this a config option
-            .send(&event_tx, move |weather| {
-                HomeEvent::UpdateWeather(weather.get_weather())
+            .send(&event_tx, |weather_client| {
+                HomeEvent::UpdateWeather(weather_client.get_weather())
             });
 
         Self {

@@ -6,7 +6,7 @@ use lib_service_common::Time;
 
 use crate::TimeRequest;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct TimeClient {
     // `TimeServer` has the receiver half of this channel.
     tx: Sender<TimeRequest>,
