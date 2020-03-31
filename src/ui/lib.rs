@@ -1,8 +1,8 @@
-#[macro_use]
-extern crate conrod_core;
+#![warn(clippy::all, clippy::pedantic)]
+#![allow(clippy::module_name_repetitions)]
 
 #[macro_use]
-extern crate log;
+extern crate conrod_core;
 
 use lib_ui_framework::System;
 pub use state::State;

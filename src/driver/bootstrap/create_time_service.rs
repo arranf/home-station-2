@@ -3,6 +3,7 @@ use lib_service_providers::{chrono, dummy};
 
 use crate::config::{app::TimeServiceName, Config};
 
+#[must_use]
 pub fn create_time_service(config: &Config) -> Box<dyn TimeService> {
     match config.app.time_service {
         TimeServiceName::Chrono => Box::new(chrono::Service::new()),

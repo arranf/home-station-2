@@ -40,13 +40,13 @@ impl HomeScreen {
         //       thanks to this we'll be able to skip all the token fiddling and do something like
         //       scoped polling
 
-        let _time_token = ServicePoller::new(&state.time)
+        let time_token = ServicePoller::new(&state.time)
             .each(Duration::from_millis(500))
             .send(&event_tx, move |time| {
                 HomeEvent::UpdateTime(time.get_time())
             });
 
-        let _weather_token = ServicePoller::new(&state.weather)
+        let weather_token = ServicePoller::new(&state.weather)
             .each(Duration::from_secs(120)) // @todo Make this a config option
             .send(&event_tx, move |weather| {
                 HomeEvent::UpdateWeather(weather.get_weather())
@@ -56,10 +56,10 @@ impl HomeScreen {
             ids: Ids::new(ui.widget_id_generator()),
 
             time: TimeWidget::new(ui),
-            _time_token,
+            _time_token: time_token,
 
             weather: WeatherWidget::new(ui),
-            _weather_token,
+            _weather_token: weather_token,
 
             events: event_rx,
         }

@@ -1,11 +1,12 @@
+#![warn(clippy::all, clippy::pedantic)]
+
 use std::path::PathBuf;
-
-use lib_service::{TimeClient, TimeServer, WeatherClient, WeatherServer};
-
-pub use self::bootstrap::*;
 
 mod bootstrap;
 pub mod config;
+
+pub use self::bootstrap::*;
+use lib_service::{TimeClient, TimeServer, WeatherClient, WeatherServer};
 
 pub fn main() {
     // Load configuration

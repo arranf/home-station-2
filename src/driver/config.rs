@@ -16,7 +16,8 @@ pub struct Config {
 }
 
 impl Config {
-    /// Loads HomeStation's configuration from specified file.
+    /// Loads home-station-2's configuration from a specified file.
+    #[must_use]
     pub fn from_file(path: &Path) -> Self {
         let config = fs::read_to_string(path).expect("failed to open the configuration file: ");
 

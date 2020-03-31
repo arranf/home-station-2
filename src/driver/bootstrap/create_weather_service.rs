@@ -3,6 +3,7 @@ use lib_service_providers::{dark_sky, dummy, open_weather_map};
 
 use crate::config::{app::WeatherServiceName, Config};
 
+#[must_use]
 pub fn create_weather_service(config: &Config) -> Box<dyn WeatherService> {
     match config.app.weather_service {
         WeatherServiceName::DarkSky => {
