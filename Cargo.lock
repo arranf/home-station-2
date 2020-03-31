@@ -921,10 +921,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "lib_i18n"
-version = "0.1.0"
-
-[[package]]
 name = "lib_open_weather_map_service_provider"
 version = "0.1.0"
 dependencies = [

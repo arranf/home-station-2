@@ -8,7 +8,6 @@ edition = "2018"
 [workspace]
 members = [
     "src/driver",
-    "src/i18n",
     "src/service",
     "src/service-common",
     "src/service-providers",
