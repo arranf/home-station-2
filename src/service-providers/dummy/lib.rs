@@ -1,4 +1,4 @@
-use anyhow::{anyhow, Result};
+use anyhow::Result;
 use log::info;
 
 use lib_service_common::{
@@ -40,6 +40,6 @@ impl WeatherService for Provider {
     }
 
     fn forecast(&mut self) -> Result<WeatherForecast> {
-        Err(anyhow!("Forecast not implemented"))
+        unimplemented!("Forecast not implemented for dummy service")
     }
 }

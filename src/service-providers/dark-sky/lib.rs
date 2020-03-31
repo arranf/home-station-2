@@ -40,9 +40,10 @@ impl Service {
             self.config.latitude,
             self.config.longitude,
         )
+        // @todo Pass in the language and units from config.
         .extend(ExtendBy::Hourly)
         .lang(Lang::English)
-        .units(Units::UK) // @todo Make sure this fetches with the correct units
+        .units(Units::UK)
         .build();
 
         Ok(ApiClient::new(&self.client).get_forecast(request)?.json()?)

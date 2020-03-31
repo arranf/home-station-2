@@ -1,6 +1,6 @@
 use log::info;
 
-use anyhow::Result;
+use anyhow::{anyhow, Result};
 use owm::WeatherHub;
 use serde::Deserialize;
 
@@ -34,7 +34,7 @@ impl WeatherService for Provider {
         let (_, weather) = weather
             .current()
             .by_name(&self.config.city, Some(&self.config.country))
-            .unwrap();
+            .map_err(|_| anyhow!("Error fetching data from Open Weather Map"))?;
 
         Ok(Weather {
             temperature: utils::temperature(&weather),
