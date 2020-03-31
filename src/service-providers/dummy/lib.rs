@@ -1,5 +1,4 @@
 use anyhow::{anyhow, Result};
-use chrono::Weekday;
 use log::info;
 
 use lib_service_common::{
@@ -22,7 +21,6 @@ impl TimeService for Provider {
             hour: 13,
             minute: 37,
             second: 0,
-            weekday: Weekday::Wed,
             day: 21,
             month: 9,
             year: 1994,

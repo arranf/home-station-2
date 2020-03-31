@@ -1,5 +1,3 @@
-use chrono::Weekday;
-
 pub trait TimeService: Send {
     fn current(&mut self) -> Time;
 }
@@ -9,7 +7,6 @@ pub struct Time {
     pub hour: u32,
     pub minute: u32,
     pub second: u32,
-    pub weekday: Weekday,
     pub day: u32,
     pub month: u32,
     pub year: i32,

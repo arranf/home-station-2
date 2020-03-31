@@ -9,5 +9,4 @@ edition = "2018"
 path = "lib.rs"
 
 [dependencies]
-chrono = "0.4"
 anyhow = "1.0"
