@@ -86,6 +86,7 @@ impl<'sys> Scheduler<'sys> {
                                 .spawn()
                                 .expect("Unable to set screen off");
                         }
+                        sleep(Duration::new(0, 5000));
                         self.display_on = !self.display_on;
                     }
                     _ => {}

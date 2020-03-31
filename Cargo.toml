@@ -1,6 +1,6 @@
 [package]
 name = "home-station-2"
-version = "0.1.1"
+version = "0.1.2"
 license = "MIT"
 authors = ["Arran France <arran@arranfrance.com>", "Patryk Wychowaniec <wychowaniec.patryk@gmail.com>"]
 edition = "2018"
