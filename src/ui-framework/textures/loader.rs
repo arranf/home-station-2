@@ -3,6 +3,7 @@ use std::ffi::OsStr;
 use std::fs;
 use std::path::{Component, Path, PathBuf};
 
+use anyhow::{anyhow, Result};
 use glium::texture::RawImage2d;
 use log::debug;
 
@@ -12,10 +13,9 @@ use crate::Display;
 pub struct TextureLoader;
 
 impl TextureLoader {
-    pub fn name(base: &Path, texture_dir: &Path, texture_file: &Path) -> String {
+    pub fn name(base: &Path, texture_dir: &Path, texture_file: &Path) -> Result<String> {
         let mut name: Vec<_> = texture_dir
-            .strip_prefix(base)
-            .unwrap()
+            .strip_prefix(base)?
             .components()
             .filter_map(|component| match component {
                 Component::Normal(str) => Some(str.to_string_lossy().to_string()),
@@ -27,27 +27,29 @@ impl TextureLoader {
         name.push(
             texture_file
                 .file_stem()
-                .unwrap()
+                .ok_or_else(|| anyhow!("File did not have file stem {:?}", texture_file))?
                 .to_str()
-                .unwrap()
+                .ok_or_else(|| anyhow!("Error converting file stem to string {:?}", texture_file))?
                 .to_owned(),
         );
 
-        name.join(":")
+        Ok(name.join(":"))
     }
 
-    pub fn load_dir(display: &Display, path: &Path) -> HashMap<TextureName, Texture2d> {
+    /// Loads all the textures in the asset directory, keyed based on their file name
+    pub fn load_dir(display: &Display, path: &Path) -> Result<HashMap<TextureName, Texture2d>> {
         debug!("Loading textures from directory: {}", path.display());
 
-        let mut textures = HashMap::new();
+        // @todo replace with walkdir
+        let mut textures: HashMap<TextureName, Texture2d> = HashMap::new();
 
         let mut pending_dirs = vec![PathBuf::from(path)];
 
         while let Some(dir) = pending_dirs.pop() {
-            for entry in fs::read_dir(&dir).unwrap() {
-                let entry = entry.unwrap();
+            for entry in fs::read_dir(&dir)? {
+                let entry = entry?;
                 let entry_path = entry.path();
-                let entry_meta = fs::metadata(&entry_path).unwrap();
+                let entry_meta = fs::metadata(&entry_path)?;
 
                 if entry_meta.is_dir() {
                     pending_dirs.push(entry.path());
@@ -55,17 +57,17 @@ impl TextureLoader {
                 }
 
                 if let Some(texture) = Self::load(display, &entry_path) {
-                    let texture_name = Self::name(path, &dir, &entry_path);
-
+                    let texture_name = Self::name(path, &dir, &entry_path)?;
                     textures.insert(texture_name, texture);
                 }
             }
         }
 
-        textures
+        Ok(textures)
     }
 
-    pub fn load(display: &Display, texture: &Path) -> Option<Texture2d> {
+    /// Loads an asset at a specific path
+    fn load(display: &Display, texture: &Path) -> Option<Texture2d> {
         if texture.extension() == Some(OsStr::new("png")) {
             Some(Self::load_png(display, texture))
         } else {

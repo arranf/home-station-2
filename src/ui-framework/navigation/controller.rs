@@ -1,3 +1,4 @@
+use anyhow::{anyhow, Result};
 use log::debug;
 
 use std::collections::VecDeque;
@@ -18,12 +19,17 @@ impl<'sys, State> NavigationController<'sys, State> {
         }
     }
 
-    pub fn navigate_to(&mut self, context: ScreenCreationContext<State>, id: &str) {
+    pub fn navigate_to(&mut self, context: ScreenCreationContext<State>, id: &str) -> Result<()> {
         debug!("Navigating to: {}", id);
 
-        let screen = self.router.get(id).unwrap().create_screen(context);
+        let screen = self
+            .router
+            .get(id)
+            .ok_or_else(|| anyhow!("Error getting screen from router id"))?
+            .create_screen(context);
 
         self.screens.push_back(screen);
+        Ok(())
     }
 
     pub fn current_mut(&mut self) -> Option<&mut (dyn Screen + 'static)> {

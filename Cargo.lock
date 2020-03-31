@@ -989,6 +989,7 @@ dependencies = [
 name = "lib_ui_framework"
 version = "0.1.0"
 dependencies = [
+ "anyhow 1.0.28 (registry+https://github.com/rust-lang/crates.io-index)",
  "conrod_core 0.67.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "conrod_glium 0.67.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "conrod_winit 0.67.0 (registry+https://github.com/rust-lang/crates.io-index)",

@@ -1,4 +1,4 @@
-use std::sync::mpsc::{channel, Sender};
+use std::sync::mpsc::channel;
 use std::thread::sleep;
 use std::time::{Duration, Instant};
 
@@ -74,6 +74,7 @@ impl<'sys> Scheduler<'sys> {
                         Key::Escape => return false,
                         _ => {}
                     },
+                    // @todo Move this state into the state and dispatch events using the scheduler to toggle the screen
                     Input::Press(Button::Mouse(_)) | Input::Touch(_) => {
                         if self.display_on {
                             std::process::Command::new("xset")
@@ -86,6 +87,7 @@ impl<'sys> Scheduler<'sys> {
                                 .spawn()
                                 .expect("Unable to set screen off");
                         }
+                        // This prevents ghost inputs on touch screens
                         sleep(Duration::new(0, 5000));
                         self.display_on = !self.display_on;
                     }
@@ -116,17 +118,18 @@ impl<'sys> Scheduler<'sys> {
         self.parked_at = Some(Instant::now());
     }
 
-    pub fn push_subscription<Event: Send + 'static, Client>(
-        self,
-        _subscription_id: &str,
-        _frequency: Duration,
-        _tx: &Sender<Event>,
-        mut _handler: impl (FnMut(&mut Client) -> Event) + Send + 'static,
-    ) {
-        // @todo
-        // Rather than on each screen setting up `ServicePoller`s that infinitely fetch on a schedule
-        // Reimplmeent service pollers here as a subscription that can be desubscribed to (we'll assume only one screen can be shown at once and widgets won't overlap subcriptions)
-        // During each task loop, we check the amount of time that's passed and if the time has execeded the duration here we'll run that task
-        // The handler will produce an event which will sent back down the tx
-    }
+    // @todo: Explore this idea
+    // pub fn push_subscription<Event: Send + 'static, Client>(
+    //     self,
+    //     _subscription_id: &str,
+    //     _frequency: Duration,
+    //     _tx: &Sender<Event>,
+    //     mut _handler: impl (FnMut(&mut Client) -> Event) + Send + 'static,
+    // ) {
+    //     // @todo
+    //     // Rather than on each screen setting up `ServicePoller`s that infinitely fetch on a schedule
+    //     // Reimplmeent service pollers here as a subscription that can be desubscribed to (we'll assume only one screen can be shown at once and widgets won't overlap subcriptions)
+    //     // During each task loop, we check the amount of time that's passed and if the time has execeded the duration here we'll run that task
+    //     // The handler will produce an event which will sent back down the tx
+    // }
 }

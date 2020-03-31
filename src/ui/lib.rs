@@ -4,6 +4,8 @@
 #[macro_use]
 extern crate conrod_core;
 
+use anyhow::Result;
+
 use lib_ui_framework::System;
 pub use state::State;
 
@@ -13,7 +15,7 @@ mod pages;
 mod state;
 
 /// Sets up the state, router, and initialises the first page.
-pub fn start(mut system: System<State>, state: State) {
+pub fn start(mut system: System<State>, state: State) -> Result<()> {
     system.setup_state(move |sys_state| {
         *sys_state = Some(state);
     });
@@ -22,5 +24,6 @@ pub fn start(mut system: System<State>, state: State) {
         router.add("home", HomeRoute);
     });
 
-    system.start("home");
+    system.start("home")?;
+    Ok(())
 }

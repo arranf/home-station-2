@@ -1,9 +1,10 @@
-use log::debug;
 use std::path::PathBuf;
 
+use anyhow::Result;
 use conrod_core::{image, Ui, UiBuilder};
 use conrod_glium::Renderer;
 use glium::texture::Texture2d;
+use log::debug;
 
 use crate::{Config, GliumBootstrapContext};
 
@@ -17,14 +18,14 @@ pub fn init_conrod(
     config: &Config,
     assets: &PathBuf,
     glium: &GliumBootstrapContext,
-) -> ConrodBootstrapContext {
+) -> Result<ConrodBootstrapContext> {
     debug!("Initializing Conrod:");
 
     // Initialize core
     debug!("-> core");
 
     let mut ui = UiBuilder::new([config.width as f64, config.height as f64]).build();
-    let renderer = Renderer::new(&glium.display.0).unwrap();
+    let renderer = Renderer::new(&glium.display.0)?;
     let image_map = image::Map::<Texture2d>::new();
 
     // Load fonts
@@ -32,14 +33,14 @@ pub fn init_conrod(
 
     let fonts = assets.join("app").join("fonts");
     for font in &["CourierPrime-Regular.ttf", "SourceSansPro-Regular.ttf"] {
-        ui.fonts.insert_from_file(fonts.join(font)).unwrap();
+        ui.fonts.insert_from_file(fonts.join(font))?;
     }
 
     debug!("... ready");
 
-    ConrodBootstrapContext {
+    Ok(ConrodBootstrapContext {
         ui,
         renderer,
         image_map,
-    }
+    })
 }

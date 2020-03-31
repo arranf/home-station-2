@@ -1,4 +1,5 @@
 use crate::{Task, TaskTx};
+use anyhow::Result;
 
 pub struct TaskDispatcher {
     tx: TaskTx,
@@ -9,7 +10,8 @@ impl TaskDispatcher {
         Self { tx }
     }
 
-    pub fn enqueue(&self, task: Task) {
-        let _ = self.tx.send(task);
+    pub fn enqueue(&self, task: Task) -> Result<()> {
+        self.tx.send(task)?;
+        Ok(())
     }
 }

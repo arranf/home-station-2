@@ -1,3 +1,4 @@
+use anyhow::Result;
 use glium::Surface;
 use log::debug;
 
@@ -26,7 +27,7 @@ impl<State> System<State> {
         callback(&mut self.router);
     }
 
-    pub fn start(self, main: RouteId) {
+    pub fn start(self, main: RouteId) -> Result<()> {
         let System {
             config,
             state,
@@ -37,9 +38,9 @@ impl<State> System<State> {
             "system has not been properly initialized - did you forget to invoke `setup_state`?",
         );
 
-        let assets = locate_assets();
-        let glium = init_glium(&config);
-        let conrod = init_conrod(&config, &assets, &glium);
+        let assets = locate_assets()?;
+        let glium = init_glium(&config)?;
+        let conrod = init_conrod(&config, &assets, &glium)?;
 
         // Extract bootstrap contexts
         let GliumBootstrapContext {
@@ -57,8 +58,7 @@ impl<State> System<State> {
 
         // Initialize texture controller
         let mut texture_ctrl = TextureController::new(&display, image_map);
-
-        texture_ctrl.initialize(&assets);
+        texture_ctrl.initialize(&assets)?;
 
         // Initialize navigation controller
         let mut navigation_ctrl = NavigationController::new(&router);
@@ -67,11 +67,11 @@ impl<State> System<State> {
         navigation_ctrl.navigate_to(
             ScreenCreationContext {
                 state: &mut state,
-                tasks: task_dispatcher,
+                task_dispatcher,
                 ui: &mut ui,
             },
             main,
-        );
+        )?;
 
         debug!("Entering event loop");
 
@@ -106,5 +106,6 @@ impl<State> System<State> {
                 frame.finish().expect("failed to finish drawing UI: ");
             }
         }
+        Ok(())
     }
 }

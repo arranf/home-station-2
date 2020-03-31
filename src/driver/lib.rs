@@ -33,7 +33,7 @@ pub fn init() -> Result<()> {
             time_client,
             weather_client,
         },
-    );
+    )?;
 
     Ok(())
 }

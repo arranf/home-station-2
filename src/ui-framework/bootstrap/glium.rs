@@ -1,3 +1,4 @@
+use anyhow::Result;
 use log::debug;
 
 use glium::glutin::{ContextBuilder, EventsLoop, WindowBuilder};
@@ -9,7 +10,7 @@ pub struct GliumBootstrapContext {
     pub display: Display,
 }
 
-pub fn init_glium(config: &Config) -> GliumBootstrapContext {
+pub fn init_glium(config: &Config) -> Result<GliumBootstrapContext> {
     debug!("Initializing Glium:");
 
     // Initialize window
@@ -32,12 +33,12 @@ pub fn init_glium(config: &Config) -> GliumBootstrapContext {
     // Initialize display
     debug!("-> display");
 
-    let display = Display(glium::Display::new(window, context, &events_loop).unwrap());
+    let display = Display(glium::Display::new(window, context, &events_loop)?);
 
     debug!("... ready");
 
-    GliumBootstrapContext {
+    Ok(GliumBootstrapContext {
         events_loop,
         display,
-    }
+    })
 }
