@@ -1,3 +1,5 @@
+#![warn(clippy::all, clippy::pedantic)]
+
 use anyhow::{anyhow, Result};
 use forecast::{
     ApiClient, ApiResponse, DataPoint, ExtendBy, ForecastRequestBuilder, Icon, Lang, Units,

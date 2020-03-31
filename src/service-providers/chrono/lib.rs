@@ -1,6 +1,7 @@
-use log::trace;
+#![warn(clippy::all, clippy::pedantic)]
 
 use chrono::{Datelike, Local, Timelike};
+use log::trace;
 
 use lib_service_common::{Time, TimeService};
 

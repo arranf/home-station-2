@@ -1,3 +1,5 @@
+#![warn(clippy::all, clippy::pedantic)]
+
 use serde::Deserialize;
 
 #[derive(Clone, Deserialize, Debug)]
