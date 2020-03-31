@@ -1,6 +1,7 @@
 use std::fs;
 use std::path::Path;
 
+use anyhow::{Context, Result};
 use serde::Deserialize;
 
 pub mod app;
@@ -18,9 +19,14 @@ pub struct Config {
 impl Config {
     /// Loads home-station-2's configuration from a specified file.
     #[must_use]
-    pub fn from_file(path: &Path) -> Self {
-        let config = fs::read_to_string(path).expect("failed to open the configuration file: ");
+    pub fn from_file(path: &Path) -> Result<Self> {
+        let config = fs::read_to_string(path).with_context(|| {
+            format!(
+                "Failed to read configuration file from {}",
+                &path.to_string_lossy()
+            )
+        })?;
 
-        toml::from_str(&config).expect("failed to parse the configuration file: ")
+        Ok(toml::from_str(&config)?)
     }
 }

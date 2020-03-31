@@ -1,10 +1,11 @@
+use anyhow::{Context, Result};
 use fern::colors::{Color, ColoredLevelConfig};
 use fern::Dispatch;
 use log::LevelFilter;
 
 use crate::config::Config;
 
-pub fn init_logger(config: &Config) {
+pub fn init_logger(config: &Config) -> Result<()> {
     let colors = ColoredLevelConfig::new()
         .info(Color::Blue)
         .debug(Color::BrightMagenta)
@@ -33,5 +34,6 @@ pub fn init_logger(config: &Config) {
         .level_for("winit", LevelFilter::Off)
         .chain(std::io::stdout())
         .apply()
-        .unwrap();
+        .context("An error occurred creating the application logger")?;
+    Ok(())
 }

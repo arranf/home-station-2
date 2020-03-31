@@ -1,3 +1,5 @@
-fn main() {
-    lib_driver::main();
+use anyhow::Result;
+
+fn main() -> Result<()> {
+    Ok(lib_driver::init()?)
 }
